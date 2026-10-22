@@ -84,6 +84,22 @@ st.markdown(
         border-color: #2B6F91;
         box-shadow: 0 0 0 1px #2B6F91;
     }
+
+    /* DPI results heading colours */
+    .dpi-interpretation {
+        color: #173B57 !important;
+        font-weight: 700;
+    }
+
+    .dpi-strong-heading {
+        color: #168A83 !important;
+        font-weight: 700;
+    }
+
+    .dpi-suggestions-heading {
+        color: #B96C18 !important;
+        font-weight: 700;
+    }
     
     </style>
     """,
@@ -805,7 +821,11 @@ if "dpi_result" in st.session_state and not st.session_state.get("dpi_save_error
     else:
         interpretation = "Strong reported habits"
 
-    st.subheader(interpretation)
+    st.markdown(
+        f'<h3 class="dpi-interpretation">{interpretation}</h3>',
+        unsafe_allow_html=True,
+    )
+    
     st.write(
         "The overall interpretation bands are provisional. The DPI is a preliminary, "
         "self-reported index; it is not a percentage of productivity or a validated "
@@ -823,8 +843,13 @@ if "dpi_result" in st.session_state and not st.session_state.get("dpi_save_error
             for dimension, score in dimension_scores.items()
         ]
     )
-    st.dataframe(score_df, hide_index=True, use_container_width=True)
-
+    with st.container(border=True):
+    st.dataframe(
+        score_df,
+        hide_index=True,
+        use_container_width=True,
+    )
+    
     strong_dimensions = [
         (dimension, score)
         for dimension, score in dimension_scores.items()
@@ -832,7 +857,10 @@ if "dpi_result" in st.session_state and not st.session_state.get("dpi_save_error
     ]
     if strong_dimensions:
         with st.container(border=True):
-            st.markdown("### ✨ Strong reported habits")
+            st.markdown(
+                '<h3 class="dpi-strong-heading">✨ Strong reported habits</h3>',
+                unsafe_allow_html=True,
+            )
             st.caption("Dimensions scoring 85 or above are highlighted here.")
             for dimension, score in strong_dimensions:
                 st.markdown(f"**{dimension} · {score:.1f}/100**")
@@ -863,7 +891,10 @@ if "dpi_result" in st.session_state and not st.session_state.get("dpi_save_error
         )[:2]
 
         if improvement_dimensions:
-            st.subheader("Suggestions to explore")
+            st.markdown(
+                '<h3 class="dpi-suggestions-heading">Suggestions to explore</h3>',
+                unsafe_allow_html=True,
+            )
             st.write(
                 "These suggestions focus on up to two dimensions below the provisional "
                 "strong-habit threshold. They are prompts for reflection, not judgments "
