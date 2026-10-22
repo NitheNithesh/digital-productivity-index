@@ -124,6 +124,7 @@ def show_success_dialog():
         use_container_width=True,
     ):
         st.session_state["dpi_show_success_dialog"] = False
+        st.session_state["dpi_scroll_to_results"] = True
         st.rerun()
 
     if st.button("Close", use_container_width=True):
@@ -799,6 +800,39 @@ recommendation_library = {
 # Results
 # ---------------------------------------------------------------------
 if "dpi_result" in st.session_state and not st.session_state.get("dpi_save_error", False):
+
+    # Add a target for the browser to scroll to.
+    st.markdown(
+        '<div id="dpi-results-anchor"></div>',
+        unsafe_allow_html=True,
+    )
+
+    # Scroll here after the respondent clicks "View my DPI results".
+    if st.session_state.get("dpi_scroll_to_results", False):
+        import streamlit.components.v1 as components
+
+        components.html(
+            """
+            <script>
+            const scrollToResults = () => {
+                const target = window.parent.document.getElementById(
+                    "dpi-results-anchor"
+                );
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start"
+                    });
+                }
+            };
+            scrollToResults();
+            </script>
+            """,
+            height=0,
+        )
+
+        st.session_state["dpi_scroll_to_results"] = False
+
     result = st.session_state["dpi_result"]
     dpi_score = result["overall"]
     dimension_scores = result["dimensions"]
