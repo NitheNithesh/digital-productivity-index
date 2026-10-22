@@ -844,12 +844,12 @@ if "dpi_result" in st.session_state and not st.session_state.get("dpi_save_error
         ]
     )
     with st.container(border=True):
-    st.dataframe(
-        score_df,
-        hide_index=True,
-        use_container_width=True,
-    )
-    
+        st.dataframe(
+            score_df,
+            hide_index=True,
+            use_container_width=True,
+        )
+        
     strong_dimensions = [
         (dimension, score)
         for dimension, score in dimension_scores.items()
