@@ -71,12 +71,52 @@ st.markdown(
         border-radius: 10px;
         font-weight: 650;
     }
+
+    /* Subtle styling for survey answer controls */
+    div[data-testid="stSelectbox"] div[data-baseweb="select"] > div {
+        border: 1px solid #C7D5E2;
+        border-radius: 8px;
+        background-color: #F8FAFC;
+    }
+
+    /* Clear keyboard-focus indicator */
+    div[data-testid="stSelectbox"] div[data-baseweb="select"]:focus-within > div {
+        border-color: #2B6F91;
+        box-shadow: 0 0 0 1px #2B6F91;
+    }
+    
     </style>
     """,
     unsafe_allow_html=True,
 )
 
-st.markdown('<div class="dpi-eyebrow">Digital work habits self-assessment</div>', unsafe_allow_html=True)
+if "dpi_show_success_dialog" not in st.session_state:
+    st.session_state["dpi_show_success_dialog"] = False
+
+@st.dialog("Response saved successfully")
+def show_success_dialog():
+    st.success(
+        "Your response has been saved successfully to the test spreadsheet."
+    )
+    st.write(
+        "Your Digital Productivity Index score and suggestions are ready."
+    )
+
+    if st.button(
+        "View my DPI results",
+        type="primary",
+        use_container_width=True,
+    ):
+        st.session_state["dpi_show_success_dialog"] = False
+        st.rerun()
+
+    if st.button("Close", use_container_width=True):
+        st.session_state["dpi_show_success_dialog"] = False
+        st.rerun()
+
+if st.session_state["dpi_show_success_dialog"]:
+    show_success_dialog()
+
 st.title("Digital Productivity Index (DPI)")
 st.write("Understand your reported digital work habits and identify practical ways to strengthen them.")
 
@@ -98,10 +138,6 @@ st.info(
     "or other identifying or confidential information. Your score is a preliminary, "
     "self-reported measure of digital work habits—not a direct measure of job performance."
 )
-
-if "dpi_result" in st.session_state and not st.session_state.get("dpi_save_error", False):
-    st.success("Your response has been saved successfully.")
-    st.markdown("[Jump to your DPI results ↓](#your-digital-productivity-index)")
 
 st.markdown(
     "**How to answer:** Choose the option that best reflects your usual work habits, "
@@ -580,7 +616,7 @@ if submitted:
                     "response_id": response_id,
                 }
                 st.session_state["dpi_stage"] = "results"
-                st.success("Your response has been saved successfully.")
+                st.session_state["dpi_show_success_dialog"] = True
                 st.rerun()
 
 # ---------------------------------------------------------------------
