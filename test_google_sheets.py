@@ -200,83 +200,82 @@ if st.session_state["dpi_stage"] == "background":
         "will be locked for this survey session."
     )
 
-    with st.form(f"dpi_background_form_{st.session_state['dpi_run_id']}"):
-        with st.container(border=True):
-            age_group = st.selectbox(
-                "Age group",
-                [
-                    "Select an answer", "Below 21", "21–25", "26–30",
-                    "31–40", "41–50", "Above 50", "Prefer not to say",
-                ],
-                key=f"{st.session_state['dpi_run_id']}_dpi_age_group",
-            )
-            experience = st.selectbox(
-                "Total work experience",
-                [
-                    "Select an answer", "Less than 1 year", "1–3 years",
-                    "4–6 years", "7–10 years", "More than 10 years",
-                ],
-                key=f"{st.session_state['dpi_run_id']}_dpi_experience",
-            )
-            role = st.selectbox(
-                "Current role",
-                [
-                    "Select an answer", "Developer", "Data Engineer / Data Analyst",
-                    "Tester", "Product Management", "Other",
-                ],
-                key=f"{st.session_state['dpi_run_id']}_dpi_role",
-            )
-            role_other = ""
-            if role == "Other":
-                role_other = st.text_input(
-                    "Please specify your role",
-                    key=f"{st.session_state['dpi_run_id']}_dpi_role_other",
-                    help="Please do not include names or other identifying details.",
-                )
-
-            organization = st.selectbox(
-                "Organization type",
-                [
-                    "Select an answer", "Product-based", "Service-based",
-                    "Manufacturing", "Self-employed", "Other",
-                ],
-                key=f"{st.session_state['dpi_run_id']}_dpi_organization",
-            )
-            organization_other = ""
-            if organization == "Other":
-                organization_other = st.text_input(
-                    "Please specify your organization type",
-                    key=f"{st.session_state['dpi_run_id']}_dpi_organization_other",
-                    help="Please do not include confidential or identifying information.",
-                )
-
-            work_arrangement = st.selectbox(
-                "Work arrangement",
-                [
-                    "Select an answer", "Office-based", "Hybrid",
-                    "Remote", "Field-based", "Other",
-                ],
-                key=f"{st.session_state['dpi_run_id']}_dpi_work_arrangement",
-            )
-            work_arrangement_other = ""
-            if work_arrangement == "Other":
-                work_arrangement_other = st.text_input(
-                    "Please specify your work arrangement",
-                    key=f"{st.session_state['dpi_run_id']}_dpi_work_arrangement_other",
-                    help="Please do not include names or other identifying details.",
-                )
-
-            ai_access = st.selectbox(
-                "Which statement best describes your access to AI tools at work?",
-                [
-                    "Select an answer", "Use regularly", "Use occasionally",
-                    "Use rarely", "Never use",
-                    "No access or not permitted by organization",
-                ],
-                key=f"{st.session_state['dpi_run_id']}_dpi_ai_access",
+    with st.container(border=True):
+        age_group = st.selectbox(
+            "Age group",
+            [
+                "Select an answer", "Below 21", "21–25", "26–30",
+                "31–40", "41–50", "Above 50", "Prefer not to say",
+            ],
+            key=f"{st.session_state['dpi_run_id']}_dpi_age_group",
+        )
+        experience = st.selectbox(
+            "Total work experience",
+            [
+                "Select an answer", "Less than 1 year", "1–3 years",
+                "4–6 years", "7–10 years", "More than 10 years",
+            ],
+            key=f"{st.session_state['dpi_run_id']}_dpi_experience",
+        )
+        role = st.selectbox(
+            "Current role",
+            [
+                "Select an answer", "Developer", "Data Engineer / Data Analyst",
+                "Tester", "Product Management", "Other",
+            ],
+            key=f"{st.session_state['dpi_run_id']}_dpi_role",
+        )
+        role_other = ""
+        if role == "Other":
+            role_other = st.text_input(
+                "Please specify your role",
+                key=f"{st.session_state['dpi_run_id']}_dpi_role_other",
+                help="Please do not include names or other identifying details.",
             )
 
-        continue_background = st.form_submit_button(
+        organization = st.selectbox(
+            "Organization type",
+            [
+                "Select an answer", "Product-based", "Service-based",
+                "Manufacturing", "Self-employed", "Other",
+            ],
+            key=f"{st.session_state['dpi_run_id']}_dpi_organization",
+        )
+        organization_other = ""
+        if organization == "Other":
+            organization_other = st.text_input(
+                "Please specify your organization type",
+                key=f"{st.session_state['dpi_run_id']}_dpi_organization_other",
+                help="Please do not include confidential or identifying information.",
+            )
+
+        work_arrangement = st.selectbox(
+            "Work arrangement",
+            [
+                "Select an answer", "Office-based", "Hybrid",
+                "Remote", "Field-based", "Other",
+            ],
+            key=f"{st.session_state['dpi_run_id']}_dpi_work_arrangement",
+        )
+        work_arrangement_other = ""
+        if work_arrangement == "Other":
+            work_arrangement_other = st.text_input(
+                "Please specify your work arrangement",
+                key=f"{st.session_state['dpi_run_id']}_dpi_work_arrangement_other",
+                help="Please do not include names or other identifying details.",
+            )
+
+        ai_access = st.selectbox(
+            "Which statement best describes your access to AI tools at work?",
+            [
+                "Select an answer", "Use regularly", "Use occasionally",
+                "Use rarely", "Never use",
+                "No access or not permitted by organization",
+            ],
+            key=f"{st.session_state['dpi_run_id']}_dpi_ai_access",
+        )
+
+        continue_background = st.button(
             "Continue to questionnaire",
             type="primary",
             use_container_width=True,
